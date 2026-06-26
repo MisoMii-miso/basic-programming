@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyPortfolio - Web Application</title>
+    <style>
+        /* ==========================================================================
+           1. CSS RESET & GLOBAL STYLES (Mengikuti estetika Gambar 1)
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header & Navigasi (Warna Biru Gambar 1) */
+        header {
+            background-color: #007bff;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 10%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* Container Konten Utama */
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        /* Halaman Konten (Disembunyikan secara default, muncul via JS) */
+        .page-section {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Hero / Profile Elements (Kembaran Gaya Gambar 1) */
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            background-color: #e9ecef;
+            border: 2px solid #007bff;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #212529;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: #6c757d;
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+
+        /* Tombol Biru Khas Gambar 1 */
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        /* Form & Input Styling (Mengikuti Form Contact Me Gambar 1) */
+        .form-container {
+            max-width: 550px;
+            margin: 30px auto 0;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: #007bff;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
+        /* Tabel Transaksi (Instruksi Gambar 2) */
+        .table-responsive {
+            margin-top: 30px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        table, th, td {
+            border: 1px solid #dee2e6;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            padding: 12px;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px;
+        }
+
+        /* Footer (Warna Biru Sesuai Gambar 1) */
+        footer {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 0.8rem;
+            margin-top: auto;
+        }
+
+        /* Animasi Transisi Halaman */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">MyPortfolio</div>
+        <nav>
+            <a onclick="navigateTo('beranda')">Beranda</a>
+            <a onclick="navigateTo('profile')">Profile</a>
+            <a onclick="navigateTo('transaksi')">Transaksi</a>
+            <a onclick="navigateTo('login')">Login</a>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <section id="beranda" class="page-section active">
+            <div class="profile-avatar">Beranda</div>
+            <h1>Pemrograman Aplikasi Web</h1>
+            <p class="subtitle">Deskripsi Singkat Mata Kuliah</p>
+            <p style="max-width: 600px; margin: 0 auto; line-height: 1.6; color: #495057;">
+                Mata kuliah ini membahas mengenai konsep dasar pengembangan aplikasi berbasis web. 
+                Fokus pembelajaran mencakup penyusunan struktur data menggunakan HTML, penghiasan layout 
+                arsitektur antarmuka dengan CSS, serta pemberian logika interaktif client-side menggunakan JavaScript.
+            </p>
+            <button class="btn-primary" style="margin-top: 25px;" onclick="navigateTo('profile')">Pelajari Selengkapnya</button>
+        </section>
+
+        <section id="profile" class="page-section">
+            <div class="profile-avatar">Web App</div>
+            <h1>Tentang Website Ini</h1>
+            <p class="subtitle">Deskripsi Perancangan Sistem</p>
+            <p style="max-width: 600px; margin: 0 auto; line-height: 1.6; color: #495057;">
+                Website ini mengusung tema <strong>"Toko Gadget & Elektronik"</strong>. Aplikasi prototipe ini dirancang untuk mendemonstrasikan integrasi layout dinamis, manipulasi data array lokal pada tabel transaksi, serta sistem keamanan validasi autentikasi dasar pada form login.
+            </p>
+        </section>
+
+        <section id="transaksi" class="page-section">
+            <h2 style="margin-bottom: 10px;">Form & Data Transaksi</h2>
+            <p class="subtitle" style="margin-bottom: 20px;">Tema: Penjualan Gadget & Elektronik</p>
+
+            <div class="form-container" style="background: #f8f9fa; padding: 25px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <form id="transactionForm">
+                    <div class="form-group">
+                        <label for="namaBarang">Pilih Produk Gadget</label>
+                        <select id="namaBarang" required>
+                            <option value="">-- Pilih Produk --</option>
+                            <option value="Smartphone Pro Max" data-harga="12000000">Smartphone Pro Max - Rp 12.000.000</option>
+                            <option value="Laptop Ultra Book" data-harga="15000000">Laptop Ultra Book - Rp 15.000.000</option>
+                            <option value="Wireless Earbuds" data-harga="1500000">Wireless Earbuds - Rp 1.500.000</option>
+                            <option value="Smartwatch Series X" data-harga="3500000">Smartwatch Series X - Rp 3.500.000</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="jumlahBarang">Jumlah Pembelian</label>
+                        <input type="number" id="jumlahBarang" min="1" placeholder="Masukkan jumlah barang..." required>
+                    </div>
+                    <button type="submit" class="btn-primary w-full" style="margin-top: 10px;">Input Data Transaksi</button>
+                </form>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Barang</th>
+                            <th>Jumlah</th>
+                            <th>Harga Satuan</th>
+                            <th>Total Harga</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionTableBody">
+                        <tr>
+                            <td>1</td>
+                            <td>Smartphone Pro Max</td>
+                            <td>1</td>
+                            <td>Rp 12.000.000</td>
+                            <td>Rp 12.000.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="login" class="page-section">
+            <h2 style="margin-bottom: 5px;">Sign In</h2>
+            <p class="subtitle">Silakan masuk ke akun Anda</p>
+
+            <div class="form-container">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Username / Email</label>
+                        <input type="text" id="username" placeholder="Masukkan nama...">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Tulis pesan...">
+                    </div>
+                    <button type="submit" class="btn-primary w-full" style="margin-top: 10px;">Kirim Pesan (Login)</button>
+                </form>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Portfolio Saya. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // --- A. LOGIKA NAVIGASI HALAMAN (SPA Redirect) ---
+        function navigateTo(pageId) {
+            // Sembunyikan semua section terlebih dahulu
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Tampilkan section yang dituju
+            const targetSection = document.getElementById(pageId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+        }
+
+        // --- B. LOGIKA FORM DAN TABEL TRANSAKSI (Instruksi 5) ---
+        let transactionCount = 1; // Counter untuk No. Urut Tabel
+
+        document.getElementById('transactionForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah reload halaman saat submit
+
+            const selectItem = document.getElementById('namaBarang');
+            const selectedOption = selectItem.options[selectItem.selectedIndex];
+            
+            const namaBarang = selectItem.value;
+            const hargaSatuan = parseInt(selectedOption.getAttribute('data-harga'));
+            const jumlah = parseInt(document.getElementById('jumlahBarang').value);
+            
+            if (!namaBarang || isNaN(jumlah) || jumlah <= 0) {
+                alert('Mohon pilih produk dan isi jumlah dengan benar.');
+                return;
+            }
+
+            // Hitung total harga
+            const totalHarga = hargaSatuan * jumlah;
+            transactionCount++;
+
+            // Format mata uang Rupiah Indonesia
+            const formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            });
+
+            // Append data baru ke dalam tabel HTML
+            const tableBody = document.getElementById('transactionTableBody');
+            const newRow = document.createElement('tr');
+            
+            newRow.innerHTML = `
+                <td>${transactionCount}</td>
+                <td>${namaBarang}</td>
+                <td>${jumlah}</td>
+                <td>${formatter.format(hargaSatuan)}</td>
+                <td>${formatter.format(totalHarga)}</td>
+            `;
+            
+            tableBody.appendChild(newRow);
+
+            // Reset input form setelah berhasil di-submit
+            document.getElementById('transactionForm').reset();
+            alert('Transaksi baru berhasil ditambahkan ke tabel!');
+        });
+
+        // --- C. LOGIKA VALIDASI LOGIN KOSONG (Instruksi 6) ---
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah form reload page
+
+            const usernameInput = document.getElementById('username').value.trim();
+            const passwordInput = document.getElementById('password').value.trim();
+
+            // Pengecekan jika inputan kosong
+            if (usernameInput === "" || passwordInput === "") {
+                alert("Peringatan: Gagal melakukan login. Username dan Password tidak boleh kosong!");
+            } else {
+                alert(`Login sukses! Selamat datang, ${usernameInput}.`);
+                // Optional: Arahkan ke Beranda jika sukses
+                navigateTo('beranda');
+                document.getElementById('loginForm').reset();
+            }
+        });
+    </script>
+</body>
+</html>
